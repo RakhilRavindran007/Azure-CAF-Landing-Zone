@@ -1,0 +1,9 @@
+root_parent_id              = ""
+root_id                     = "rak"
+root_name                   = "RAK Creations"
+default_location            = "westeurope"
+deploy_core_landing_zones   = true
+primary_location            = "westeurope"
+secondary_location          = "northeurope"
+subscription_id_identity    = ""
+deploy_identity_resources   = true

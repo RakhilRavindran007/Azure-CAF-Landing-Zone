@@ -1,0 +1,18 @@
+{
+    "extend_es_landing_zones": {
+      "policy_assignments": ["Not-Allowed-Resources", "Deny-NIC-NSG"],
+      "policy_definitions": [],
+      "policy_set_definitions": [],
+      "role_definitions": [],
+      "archetype_config": {
+        "parameters": {
+          "Deny-Subnet-Without-Nsg": {
+            "effect": "Audit"
+          }
+        },
+        "access_control": {
+          "[waazlearneu2] Reader-Support-Tickets": ["4522187e-b25b-4478-9250-6c2551c9e4f4"]
+        }
+      }
+    }
+  }
