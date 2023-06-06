@@ -30,7 +30,7 @@ jobs:
             sudo apt-get install azure-cli -y
             az --version
       - name: az login
-        run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --tenant${{ secrets.TENANT_ID }}
+        run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --t ${{ secrets.TENANT_ID }}
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
