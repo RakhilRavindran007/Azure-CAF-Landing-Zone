@@ -10,5 +10,5 @@ jobs:
         with:
           repository: 'LandingZone-GitHubAction-WorkFlow'
       - name: Change to Core Directory
-        run: cd Core
+        run: cd ./Core
       
