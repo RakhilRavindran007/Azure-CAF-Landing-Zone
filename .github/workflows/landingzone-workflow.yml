@@ -8,7 +8,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          repository: 'LandingZone-GitHubAction-WorkFlow'
+          ref: LandingZone-GitHubAction-WorkFlow
       - name: Change to Core Directory
         run: cd ./Core
       
