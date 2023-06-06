@@ -10,7 +10,7 @@ jobs:
         with:
           ref: LandingZone-GitHubAction-WorkFlow
       - name: Change to Core Directory
-        run: cd ./Core
+        working-directory: ./Core
       - name: Present Working Direcotry
         run: pwd
       
