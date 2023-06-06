@@ -29,10 +29,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install azure-cli -y
             az --version
-      - name: Az Login
-        uses: Azure/login@v1
-        with:
-            creds: '{"clientId":"${{ secrets.CLIENT_ID }}","clientSecret":"${{ secrets.CLIENT_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.TENANT_ID }}"}'
+      - name: az login
+        run: az login --service-principal -u 605c4958-a31f-4ca1-b73f-8c053577f60d -p W5C8Q~Bnj1yBuW25emaqSsIe4HjLoYNp~9L_Pazi --tenant a017b7d0-4680-461d-adaa-b061a9c95b76
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
