@@ -27,7 +27,7 @@ jobs:
       - name: simple az command check
         run: az account show
       - name: Terraform Init
-        run: terraform init -backend-config="resource_group_name=$TF_VAR_resource_group_name" -backend-config="storage_account_name=$TF_VAR_storage_account_name" -backend-config="container_name=$TF_VAR_container_name"  -backend-config="key=$TF_VAR_key"
+        run: terraform init -backend-config="resource_group_name=rg-terraform-dev-we-01" -backend-config="storage_account_name=stoterraformdevwe432" -backend-config="container_name=tfstate"  -backend-config="key=core.tfstate"
       - name: Terraform Plan
         run: terraform plan
       
