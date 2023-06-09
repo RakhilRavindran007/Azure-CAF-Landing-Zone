@@ -1,5 +1,10 @@
 name: RAK Creations Landing Zone Deployment
 on: workflow_dispatch
+env:
+      TF_VAR_agent_client_id: ${{ secrets.CLIENT_ID }}
+      TF_VAR_agent_client_secret: ${{ secrets.CLIENT_SECRET }}
+      TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }}
+      TF_VAR_tenant_id: ${{ secrets.TENANT_ID }}
 jobs:
   Core:
     name: core
@@ -7,16 +12,11 @@ jobs:
     defaults: 
       run: 
         working-directory: ./Core
-    env:
-      TF_VAR_agent_client_id: ${{ secrets.CLIENT_ID }}
-      TF_VAR_agent_client_secret: ${{ secrets.CLIENT_SECRET }}
-      TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }}
-      TF_VAR_tenant_id: ${{ secrets.TENANT_ID }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          ref: LandingZone-GitHubAction-WorkFlow
+          ref: master
       - name: az login
         run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --t ${{ secrets.TENANT_ID }}
       - name: Terraform Init
