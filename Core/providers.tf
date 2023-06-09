@@ -8,9 +8,7 @@ terraform {
       version = ">= 3.54.0"
     }
   }
-  backend "local" {
-    path = "./core.tfstate"
-  }
+  backend "azurerm" {}
 }
 
 # Define the provider configuration
