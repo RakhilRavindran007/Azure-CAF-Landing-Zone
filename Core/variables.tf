@@ -24,7 +24,7 @@ variable "default_location" {
 }
 
 variable "deploy_core_landing_zones" {
-  type    = bool
+  type = bool
 }
 
 variable "primary_location" {
@@ -47,4 +47,20 @@ variable "subscription_id_identity" {
 
 variable "deploy_identity_resources" {
   type = bool
+}
+
+variable "backend_storage_resource_group_name" {
+  type = string
+}
+
+variable "backend_storage_account_name" {
+  type = string
+}
+
+variable "backend_storage_account_container_name" {
+  type = string
+}
+
+variable "backend_storage_account_key" {
+  type = string
 }
