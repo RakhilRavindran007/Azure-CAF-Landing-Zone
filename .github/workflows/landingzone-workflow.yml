@@ -5,6 +5,9 @@ env:
       TF_VAR_agent_client_secret: ${{ secrets.CLIENT_SECRET }}
       TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }}
       TF_VAR_tenant_id: ${{ secrets.TENANT_ID }}
+      TF_VAR_resource_group_name: rg-terraform-dev-we-01
+      TF_VAR_storage_account_name: stoterraformdevwe432
+      TF_VAR_container_name: tfstate
 jobs:
   Core:
     name: core
@@ -12,6 +15,8 @@ jobs:
     defaults: 
       run: 
         working-directory: ./Core
+    env:
+      TF_VAR_key: core.tfvars
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -20,7 +25,7 @@ jobs:
       - name: az login
         run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --t ${{ secrets.TENANT_ID }}
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config="resource_group_name=$TF_VAR_resource_group_name" -backend-config="storage_account_name=$TF_VAR_storage_account_name" -backend-config="container_name=$TF_VAR_container_name"  -backend-config="key=$TF_VAR_key"
       - name: Terraform Plan
         run: terraform plan
       
