@@ -1,7 +1,7 @@
 name: RAK Creations Landing Zone Deployment
 on: 
       push: 
-            paths: master
+            branches: master
       workflow_dispatch:
 env:
       TF_VAR_agent_client_id: ${{ secrets.CLIENT_ID }}
@@ -16,20 +16,35 @@ jobs:
       run: 
         working-directory: ./Core
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v3
         with:
           ref: master
-      - name: az login
-        run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --t ${{ secrets.TENANT_ID }}
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+            terraform_version: 1.4.6
+      - name: Configure Azure Login
+        uses: actions/login@v1
+        with: 
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: simple az command check
         run: az account show
-      - name: Terraform Init
+      - name: Configure Terraform Backend
         run: |
-            terraform init -backend-config="storage_account_name=stoterraformdevwe432" \
-            -backend-config="container_name=tfstate" \
-            -backend-config="key=core.tfstate" \
-            -backend-config="access_key=${{ secrets.CLIENT_SECRET }}"
+            echo "terraform {
+                        backend \"azurerm\" {
+                              storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
+                              container_name       = \"tfstate\"
+                              key                  = \"terraform.tfstate\"
+                              tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
+                              subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
+                              client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
+                              client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
+                                          }
+                              }" > remote.tf
+      - name: Terraform Init
+        run: terraform init
       - name: Terraform Plan
         run: terraform plan
       
