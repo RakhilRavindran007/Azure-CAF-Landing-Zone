@@ -22,7 +22,13 @@ jobs:
       - name: simple az command check
         run: az account show
       - name: Terraform Init
-        run: terraform init
+        run: |
+            terraform init -backend-config="storage_account_name=" \
+            -backend-config="container_name=" \
+            -backend-config="key=core.tfstate" \
+            -backend-config="client_id=${{ secrets.CLIENT_ID }}"
+            -backend-config="client_secret=${{ secrets.CLIENT_SECRET }}"
+            -backend-config="tenant_id=${{ secrets.TENANT_ID }}"
       - name: Terraform Plan
         run: terraform plan
       
