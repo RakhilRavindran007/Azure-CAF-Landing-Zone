@@ -49,7 +49,7 @@ variable "deploy_identity_resources" {
   type = bool
 }
 
-variable "backend_storage_resource_group_name" {
+/*variable "backend_storage_resource_group_name" {
   type = string
 }
 
@@ -63,4 +63,4 @@ variable "backend_storage_account_container_name" {
 
 variable "backend_storage_account_key" {
   type = string
-}
+}*/
