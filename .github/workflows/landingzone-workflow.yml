@@ -1,5 +1,8 @@
 name: RAK Creations Landing Zone Deployment
-on: workflow_dispatch
+on: 
+      push: 
+            paths: master
+      workflow_dispatch:
 env:
       TF_VAR_agent_client_id: ${{ secrets.CLIENT_ID }}
       TF_VAR_agent_client_secret: ${{ secrets.CLIENT_SECRET }}
@@ -26,7 +29,7 @@ jobs:
             terraform init -backend-config="storage_account_name=stoterraformdevwe432" \
             -backend-config="container_name=tfstate" \
             -backend-config="key=core.tfstate" \
-            -backend-config="access_key=${{ secrets.STORAGE_ACCESS_KEY }}"
+            -backend-config="access_key=${{ secrets.CLIENT_SECRET }}"
       - name: Terraform Plan
         run: terraform plan
       
