@@ -26,9 +26,7 @@ jobs:
             terraform init -backend-config="storage_account_name=" \
             -backend-config="container_name=" \
             -backend-config="key=core.tfstate" \
-            -backend-config="client_id=${{ secrets.CLIENT_ID }}"
-            -backend-config="client_secret=${{ secrets.CLIENT_SECRET }}"
-            -backend-config="tenant_id=${{ secrets.TENANT_ID }}"
+            -backend-config="access_key=${{ secrets.STORAGE_ACCESS_KEY }}"
       - name: Terraform Plan
         run: terraform plan
       
