@@ -47,12 +47,14 @@ jobs:
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
-        id: terraform-plan
-        run: echo "tfplan=$(terraform plan -out=tfplan)" >> "$GITHUB_OUTPUT"
+        id: plan
+        run: |
+            touch tfplan.txt
+            terraform plan -out=tfplan.txt
       - name: Upload TF Plan
         uses: actions/upload-artifact@v3
         with:
             name: tf-plan
-            path: terraform.tfplan
+            path: tfplan.txt
       
       
