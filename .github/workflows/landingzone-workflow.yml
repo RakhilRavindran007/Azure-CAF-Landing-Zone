@@ -28,15 +28,13 @@ jobs:
         uses: azure/login@v1
         with: 
             creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: simple az command check
-        run: az account show
       - name: Configure Terraform Backend
         run: |
           echo "terraform {
             backend \"azurerm\" {
               storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
               container_name       = \"tfstate\"
-              key                  = \"terraform.tfstate\"
+              key                  = \"core.tfstate\"
               tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
               subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
               client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
@@ -46,8 +44,6 @@ jobs:
               
             }
           }" > backend.tf
-      - name: CAT remote.tf
-        run: cat backend.tf
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
