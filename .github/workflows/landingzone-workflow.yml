@@ -43,6 +43,8 @@ jobs:
                               client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
                                           }
                               }" > remote.tf
+      - name: CAT remote.tf
+        run: cat remote.tf
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
