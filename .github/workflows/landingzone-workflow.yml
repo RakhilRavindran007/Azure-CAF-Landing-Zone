@@ -41,6 +41,9 @@ jobs:
               subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
               client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
               client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
+              resource_group_name  = \"rg-terraform-dev-we-01\"
+              use_azuread_auth     = true
+              
             }
           }" > backend.tf
       - name: CAT remote.tf
