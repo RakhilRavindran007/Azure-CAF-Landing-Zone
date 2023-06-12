@@ -32,19 +32,19 @@ jobs:
         run: az account show
       - name: Configure Terraform Backend
         run: |
-            echo "terraform {
-                        backend \"azurerm\" {
-                              storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
-                              container_name       = \"tfstate\"
-                              key                  = \"terraform.tfstate\"
-                              tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
-                              subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
-                              client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
-                              client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
-                                          }
-                              }" > remote.tf
+          echo "terraform {
+            backend \"azurerm\" {
+              storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
+              container_name       = \"tfstate\"
+              key                  = \"terraform.tfstate\"
+              tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
+              subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
+              client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
+              client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
+            }
+          }" > backend.tf
       - name: CAT remote.tf
-        run: cat remote.tf
+        run: cat backend.tf
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
