@@ -8,7 +8,7 @@ terraform {
       version = ">= 3.54.0"
     }
   }
-  backend "azurerm" {}
+  #backend "azurerm" {}
 }
 
 # Define the provider configuration
