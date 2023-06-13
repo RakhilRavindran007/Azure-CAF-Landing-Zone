@@ -55,6 +55,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
             name: terraform-plan
-            path: tfplan
+            path: ./Core/tfplan
       
       
