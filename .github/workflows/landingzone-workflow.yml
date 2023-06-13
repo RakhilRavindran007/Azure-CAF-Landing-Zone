@@ -51,10 +51,12 @@ jobs:
         run: |
             pwd
             terraform plan -out=tfplan -compact-warnings
+      - name: Generate Plan Summary
+        run: terraform show tfplan > plan_summary.txt
       - name: Upload TF Plan
         uses: actions/upload-artifact@v3
         with:
             name: terraform-plan
-            path: ./Core/tfplan
+            path: ./Core/plan_summary.txt
       
       
