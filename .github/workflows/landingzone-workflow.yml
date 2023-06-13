@@ -50,7 +50,7 @@ jobs:
         id: terraform_plan
         run: |
             pwd
-            terraform plan -out=tfplan
+            terraform plan -out=tfplan -compact-warnings
       - name: Upload TF Plan
         uses: actions/upload-artifact@v3
         with:
