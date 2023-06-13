@@ -52,11 +52,11 @@ jobs:
             pwd
             terraform plan -out=tfplan -compact-warnings
       - name: Generate Plan Summary
-        run: terraform show -json tfplan > plan_summary.json
+        run: terraform show tfplan > plan_summary
       - name: Upload TF Plan
         uses: actions/upload-artifact@v3
         with:
             name: terraform-plan
-            path: ./Core/plan_summary.json
+            path: ./Core/plan_summary
       
       
