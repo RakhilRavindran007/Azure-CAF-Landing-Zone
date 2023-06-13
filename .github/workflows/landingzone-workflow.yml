@@ -47,14 +47,13 @@ jobs:
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
-        id: plan
+        id: terraform_plan
         run: |
-            touch tfplan.txt
-            terraform plan -out=tfplan.txt
+            terraform plan -out=tfplan
       - name: Upload TF Plan
         uses: actions/upload-artifact@v3
         with:
-            name: tf-plan
-            path: tfplan.txt
+            name: terraform-plan
+            path: tfplan
       
       
