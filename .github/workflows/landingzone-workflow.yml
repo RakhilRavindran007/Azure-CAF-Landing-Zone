@@ -68,11 +68,14 @@ jobs:
     defaults: 
       run: 
         working-directory: ./Core
-    steps:
+    steps:  
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: master
       - name: Manual approval
         id: approval
         run: echo "Please review and approve this deployment"
-
       - name: Check approval status
         run: |
           if [ "${{ steps.approval.outputs.result }}" == "approved" ]; then
@@ -80,11 +83,7 @@ jobs:
           else
             echo "Approval gate not passed"
             exit 1
-          fi   
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          ref: master
+          fi 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
