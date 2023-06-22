@@ -63,6 +63,8 @@ jobs:
   Core-Apply:
     name: Core-Apply
     runs-on: ubuntu-latest
+    environment:
+      name: Core Apply
     needs: Core-Plan
     if: needs.Core-Plan.result == 'success'
     defaults: 
@@ -73,17 +75,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: master
-      - name: Manual approval
-        id: approval
-        run: echo "Please review and approve this deployment"
-      - name: Check approval status
-        run: |
-          if [ "${{ steps.approval.outputs.result }}" == "approved" ]; then
-            echo "Approval gate passed"
-          else
-            echo "Approval gate not passed"
-            exit 1
-          fi 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
