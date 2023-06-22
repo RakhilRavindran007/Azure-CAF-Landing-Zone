@@ -1,7 +1,5 @@
 name: RAK Creations Landing Zone Deployment
 on: 
-      push: 
-            branches: master
       workflow_dispatch:
 env:
       TF_VAR_agent_client_id: ${{ secrets.CLIENT_ID }}
@@ -9,8 +7,8 @@ env:
       TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }}
       TF_VAR_tenant_id: ${{ secrets.TENANT_ID }}
 jobs:
-  Core:
-    name: core
+  Core-Plan:
+    name: Core-Plan
     runs-on: ubuntu-latest
     defaults: 
       run: 
@@ -62,4 +60,59 @@ jobs:
             name: terraform-plan
             path: ./Core/plan_summary.txt
       
-      
+  Core-Apply:
+    name: Core-Plan
+    runs-on: ubuntu-latest
+    needs: Core-Plan
+    if: needs.Core-Plan.results == 'success'
+    defaults: 
+      run: 
+        working-directory: ./Core
+    steps:
+      - name: Request approval
+        id: approval
+        uses: azure/approvals@v1
+        with:
+          poll-interval: 5
+          poll-timeout: 300
+
+      - name: Check approval status
+        run: |
+          if [ "${{ steps.approval.outputs.result }}" == "approved" ]; then
+            echo "Approval gate passed"
+          else
+            echo "Approval gate not passed"
+            exit 1
+          fi
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: master
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+            terraform_version: 1.4.6
+      - name: Configure Azure Login
+        uses: azure/login@v1
+        with: 
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Configure Terraform Backend
+        run: |
+          echo "terraform {
+            backend \"azurerm\" {
+              storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
+              container_name       = \"tfstate\"
+              key                  = \"core.tfstate\"
+              tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
+              subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
+              client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
+              client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
+              resource_group_name  = \"rg-terraform-dev-we-01\"
+              use_azuread_auth     = true
+              
+            }
+          }" > backend.tf
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Plan
+        run: terraform apply
