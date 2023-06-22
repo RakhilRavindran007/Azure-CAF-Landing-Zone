@@ -64,7 +64,6 @@ jobs:
     name: Core-Apply
     runs-on: ubuntu-latest
     needs: Core-Plan
-    if: needs.Core-Plan.results == 'success'
     defaults: 
       run: 
         working-directory: ./Core
@@ -114,5 +113,5 @@ jobs:
           }" > backend.tf
       - name: Terraform Init
         run: terraform init
-      - name: Terraform Plan
+      - name: Terraform Apply
         run: terraform apply
