@@ -69,12 +69,9 @@ jobs:
       run: 
         working-directory: ./Core
     steps:
-      - name: Request approval
+      - name: Manual approval
         id: approval
-        uses: azure/approvals@v1
-        with:
-          poll-interval: 5
-          poll-timeout: 300
+        run: echo "Please review and approve this deployment"
 
       - name: Check approval status
         run: |
@@ -83,7 +80,7 @@ jobs:
           else
             echo "Approval gate not passed"
             exit 1
-          fi
+          fi   
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
