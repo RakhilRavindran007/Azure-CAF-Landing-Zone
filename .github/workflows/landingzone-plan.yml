@@ -1,5 +1,22 @@
 name: terraform-plan
-on: workflow_call
+on: 
+  workflow_call:
+    #inputs:
+
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      AZURE_STORAGE_ACCOUNT_NAME:
+        required: true
+      ARM_TENANT_ID:
+        required: true
+      ARM_SUBSCRIPTION_ID:
+        required: true
+      ARM_CLIENT_ID:
+        required: true
+      ARM_CLIENT_SECRET:
+        required: true
+
 jobs:
   terraform-plan:
     name: Terraform Plan
