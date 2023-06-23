@@ -9,10 +9,10 @@ env:
 jobs:
   Core-Plan:
     uses: ./.github/workflows/landingzone-plan.yml
-    #with:
-      #container_name: tfstate
-      #key: core.tfstate
-      #resource_group_name: rg-terraform-dev-we-01
+    with:
+      container_name: tfstate
+      key: core.tfstate
+      resource_group_name: rg-terraform-dev-we-01
       #working-directory: ./Core
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
