@@ -1,0 +1,57 @@
+name: terraform-plan
+on: workflow_call
+jobs:
+  terraform-plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    defaults: 
+      run: 
+        working-directory: ./Core
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: master
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+            terraform_version: 1.4.6
+      - name: Configure Azure Login
+        uses: azure/login@v1
+        with: 
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Configure Terraform Backend
+        run: |
+          echo "terraform {
+            backend \"azurerm\" {
+              storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
+              container_name       = \"tfstate\"
+              key                  = \"core.tfstate\"
+              tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
+              subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
+              client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
+              client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
+              resource_group_name  = \"rg-terraform-dev-we-01\"
+              use_azuread_auth     = true
+              
+            }
+          }" > backend.tf
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Plan
+        id: terraform_plan
+        run: |
+            pwd
+            terraform plan -out=tfplan -compact-warnings
+      - name: Generate Plan Summary
+        id: plan_summary
+        run: |
+            terraform show tfplan > plan_summary.txt
+            echo "plan_summary=$(cat plan_summary.txt)"
+      - name: Upload TF Plan
+        uses: actions/upload-artifact@v3
+        with:
+            name: terraform-plan
+            path: ./Core/plan_summary.txt
+      
+    
