@@ -13,7 +13,7 @@ jobs:
       container_name: tfstate
       key: core.tfstate
       resource_group_name: rg-terraform-dev-we-01
-      #working-directory: ./Core
+      working-directory: ./Core
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
