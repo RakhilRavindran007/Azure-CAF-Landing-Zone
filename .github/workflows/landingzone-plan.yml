@@ -12,10 +12,12 @@ on:
         type: string
       resource_group_name:
         description: Please provide the storage account resource group name 
-        required: string
+        required: true
         type: string
       working-directory:
         description: Please provide the terraform working directory
+        required: true
+        type: string
 
     secrets:
       AZURE_CREDENTIALS:
