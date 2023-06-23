@@ -38,8 +38,8 @@ on:
         required: true
 
 jobs:
-  terraform-plan:
-    name: Terraform Plan
+  terraform-destroy:
+    name: Terraform destroy
     runs-on: ubuntu-latest
     defaults: 
       run: 
@@ -75,18 +75,5 @@ jobs:
           }" > backend.tf
       - name: Terraform Init
         run: terraform init
-      - name: Terraform Plan
-        id: terraform_plan
-        run: |
-            pwd
-            terraform plan -out=tfplan -compact-warnings
-      - name: Generate Plan Summary
-        id: plan_summary
-        run: |
-            terraform show tfplan > plan_summary.txt
-            echo "plan_summary=$(cat plan_summary.txt)"
-      - name: Upload TF Plan
-        uses: actions/upload-artifact@v3
-        with:
-            name: terraform-plan
-            path: ${{ inputs.working-directory}}/plan_summary.txt
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve

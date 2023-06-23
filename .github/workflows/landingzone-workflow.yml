@@ -23,89 +23,40 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       
   Core-Apply:
-    name: Core-Apply
-    runs-on: ubuntu-latest
     environment:
       name: Core Apply
     needs: Core-Plan
     if: needs.Core-Plan.result == 'success'
-    defaults: 
-      run: 
-        working-directory: ./Core
-    steps:  
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          ref: master
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-            terraform_version: 1.4.6
-      - name: Configure Azure Login
-        uses: azure/login@v1
-        with: 
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Configure Terraform Backend
-        run: |
-          echo "terraform {
-            backend \"azurerm\" {
-              storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
-              container_name       = \"tfstate\"
-              key                  = \"core.tfstate\"
-              tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
-              subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
-              client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
-              client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
-              resource_group_name  = \"rg-terraform-dev-we-01\"
-              use_azuread_auth     = true
-              
-            }
-          }" > backend.tf
-      - name: Terraform Init
-        run: terraform init
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-  
+    uses: ./.github/workflows/landingzone-apply.yml
+    with:
+      container_name: tfstate
+      key: core.tfstate
+      resource_group_name: rg-terraform-dev-we-01
+      working-directory: ./Core
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+
   Core-Destroy:
-    name: Core-Destroy
-    runs-on: ubuntu-latest
     environment:
       name: Core Destroy
     needs: Core-Plan
     if: needs.Core-Plan.result == 'success'
-    defaults: 
-      run: 
-        working-directory: ./Core
-    steps:  
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          ref: master
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-            terraform_version: 1.4.6
-      - name: Configure Azure Login
-        uses: azure/login@v1
-        with: 
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Configure Terraform Backend
-        run: |
-          echo "terraform {
-            backend \"azurerm\" {
-              storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
-              container_name       = \"tfstate\"
-              key                  = \"core.tfstate\"
-              tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
-              subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
-              client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
-              client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
-              resource_group_name  = \"rg-terraform-dev-we-01\"
-              use_azuread_auth     = true
-              
-            }
-          }" > backend.tf
-      - name: Terraform Init
-        run: terraform init
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
+    uses: ./.github/workflows/landingzone-destroy.yml
+    with:
+      container_name: tfstate
+      key: core.tfstate
+      resource_group_name: rg-terraform-dev-we-01
+      working-directory: ./Core
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+    
