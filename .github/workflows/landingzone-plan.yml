@@ -62,13 +62,13 @@ jobs:
           echo "terraform {
             backend \"azurerm\" {
               storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
-              container_name       = \"${{ inputs.container_name}}\"
+              container_name       = \"${{ inputs.container_name }}\"
               key                  = \"${{ inputs.key}}\"
               tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
               subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
               client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
               client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
-              resource_group_name  = \"${{ inputs.resource_group_name}}\"
+              resource_group_name  = \"${{ inputs.resource_group_name }}\"
               use_azuread_auth     = true
               
             }
