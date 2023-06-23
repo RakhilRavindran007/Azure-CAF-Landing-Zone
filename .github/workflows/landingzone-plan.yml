@@ -1,7 +1,21 @@
 name: terraform-plan
 on: 
   workflow_call:
-    #inputs:
+    inputs:
+      container_name:
+        description: Please provide storage account container name here
+        required: true
+        type: string
+      key:
+        description: Please provide tfstate file name
+        required: true
+        type: string
+      resource_group_name:
+        description: Please provide the storage account resource group name 
+        required: string
+        type: string
+      working-directory:
+        description: Please provide the terraform working directory
 
     secrets:
       AZURE_CREDENTIALS:
@@ -23,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults: 
       run: 
-        working-directory: ./Core
+        working-directory: ${{ inputs.working-directory}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -42,13 +56,13 @@ jobs:
           echo "terraform {
             backend \"azurerm\" {
               storage_account_name = \"${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}\"
-              container_name       = \"tfstate\"
-              key                  = \"core.tfstate\"
+              container_name       = \"${{ inputs.tfstate}}\"
+              key                  = \"${{inputs.key}}\"
               tenant_id            = \"${{ secrets.ARM_TENANT_ID }}\"
               subscription_id      = \"${{ secrets.ARM_SUBSCRIPTION_ID }}\"
               client_id            = \"${{ secrets.ARM_CLIENT_ID }}\"
               client_secret        = \"${{ secrets.ARM_CLIENT_SECRET }}\"
-              resource_group_name  = \"rg-terraform-dev-we-01\"
+              resource_group_name  = \"${{ inputs.resource_group_name}}\"
               use_azuread_auth     = true
               
             }
@@ -69,6 +83,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
             name: terraform-plan
-            path: ./Core/plan_summary.txt
+            path: ${{ inputs.working-directory}}/plan_summary.txt
       
     
