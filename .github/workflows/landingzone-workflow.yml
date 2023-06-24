@@ -143,8 +143,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
 
   Management-Destroy:
-    environment: 
-      name: Management-Destroy
     needs: Management-Plan
     if: needs.Management-Plan.result == 'success'
     uses: ./.github/workflows/landingzone-destroy.yml  
