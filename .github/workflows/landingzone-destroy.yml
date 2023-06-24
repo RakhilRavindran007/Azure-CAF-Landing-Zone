@@ -22,6 +22,10 @@ on:
         required: true
         type: string
         default: ./Core
+      environment:
+        description: Please Specify the environemnt here
+        required: true
+        type: string
 
     secrets:
       AZURE_CREDENTIALS:
@@ -41,6 +45,8 @@ jobs:
   terraform-destroy:
     name: Terraform destroy
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
     defaults: 
       run: 
         working-directory: ${{ inputs.working-directory}}

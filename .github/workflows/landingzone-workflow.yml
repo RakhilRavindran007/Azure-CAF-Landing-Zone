@@ -1,11 +1,7 @@
 name: RAK Creations Landing Zone Deployment
 on: 
       workflow_dispatch:
-env:
-      TF_VAR_agent_client_id: ${{ secrets.CLIENT_ID }}
-      TF_VAR_agent_client_secret: ${{ secrets.CLIENT_SECRET }}
-      TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }}
-      TF_VAR_tenant_id: ${{ secrets.TENANT_ID }}
+
 jobs:
   Core-Plan:
     uses: ./.github/workflows/landingzone-plan.yml
@@ -23,8 +19,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       
   Core-Apply:
-    environment:
-      name: Core Apply
     needs: Core-Plan
     if: needs.Core-Plan.result == 'success'
     uses: ./.github/workflows/landingzone-apply.yml
@@ -33,6 +27,7 @@ jobs:
       key: core.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Core
+      environment: Core Apply
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -42,8 +37,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
 
   Core-Destroy:
-    environment:
-      name: Core Destroy
     needs: Core-Plan
     if: needs.Core-Plan.result == 'success'
     uses: ./.github/workflows/landingzone-destroy.yml
@@ -52,6 +45,7 @@ jobs:
       key: core.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Core
+      environment: Core Destroy
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -78,8 +72,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
 
   Networking-Apply:
-    environment: 
-      name: Networking-Apply
     needs: Networking-Plan
     if: needs.Networking-Plan.result == 'success'
     uses: ./.github/workflows/landingzone-apply.yml  
@@ -88,6 +80,7 @@ jobs:
       key: networking.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Connectivity_Hub_Spoke
+      environment: Networking Apply
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -97,8 +90,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
 
   Networking-Destroy:
-    environment: 
-      name: Networking-Destroy
     needs: Networking-Plan
     if: needs.Networking-Plan.result == 'success'
     uses: ./.github/workflows/landingzone-destroy.yml  
@@ -107,6 +98,7 @@ jobs:
       key: networking.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Connectivity_Hub_Spoke
+      environment: Networking Destroy
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -133,8 +125,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
 
   Management-Apply:
-    environment: 
-      name: Management-Apply
     needs: Management-Plan
     if: needs.Management-Plan.result == 'success'
     uses: ./.github/workflows/landingzone-apply.yml  
@@ -143,6 +133,7 @@ jobs:
       key: management.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Management
+      environment: Management Apply
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -162,6 +153,7 @@ jobs:
       key: management.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Management
+      environment: Management Destroy
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}

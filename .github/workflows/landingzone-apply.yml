@@ -18,6 +18,10 @@ on:
         description: Please provide the terraform working directory
         required: true
         type: string
+      environment:
+        description: Please Specify the environemnt here
+        required: true
+        type: string
 
     secrets:
       AZURE_CREDENTIALS:
@@ -37,6 +41,8 @@ jobs:
   terraform-apply:
     name: Terraform Apply
     runs-on: ubuntu-latest
+    environment: 
+      name: ${{ inputs.environment }}
     defaults: 
       run: 
         working-directory: ${{ inputs.working-directory}}
