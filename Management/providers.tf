@@ -8,9 +8,9 @@ terraform {
       version = ">= 3.54.0"
     }
   }
-  backend "local" {
+  /*backend "local" {
     path = "./management.tfstate"
-  }
+  }*/
 }
 
 # Define the provider configuration
