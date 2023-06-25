@@ -8,16 +8,16 @@
       "notScopes": [],
       "parameters": {
         "EnforceRGTags-Owner": {
-          "Value": "Jane Doe"
+          "Value": "Owner"
         },
         "EnforceRGTags-Department": {
-          "Value": "IT"
+          "Value": "Department"
         },
         "EnforceResourceTags-Owner": {
-          "Value": "Jane Doe"
+          "Value": "Owner"
         },
         "EnforceResourceTags-Department": {
-          "Value": "IT"
+          "Value": "Department"
         }
       },
       "policyDefinitionId": "${root_scope_resource_id}/providers/Microsoft.Authorization/policySetDefinitions/Enforce-Mandatory-Tags",

@@ -12,5 +12,5 @@ management_resources_tags = {
   deployedBy  = "rakhilravindran007@outlook.com"
   environment = "demo"
   Department  = "CCoE"
-  owner       = "rakhilravindran007@gmail.com"
+  Owner       = "rakhilravindran007@gmail.com"
 }
