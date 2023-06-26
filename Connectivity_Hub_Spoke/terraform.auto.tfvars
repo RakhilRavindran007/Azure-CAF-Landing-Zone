@@ -10,4 +10,6 @@ enable_ddos_protection        = false
 connectivity_resources_tags = {
   deployedBy = "rakhilravindran007@outlook.com"
   environment = "demo"
+  Department  = "CCoE"
+  Owner       = "rakhilravindran007@gmail.com"
 }
