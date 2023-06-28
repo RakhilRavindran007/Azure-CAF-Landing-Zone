@@ -22,6 +22,10 @@ on:
         description: Please Specify the environemnt here
         required: true
         type: string
+      terraform_version:
+        description: Please Provide the terraform version
+        type: string
+        required: true
 
     secrets:
       AZURE_CREDENTIALS:
@@ -54,7 +58,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-            terraform_version: 1.4.6
+            terraform_version: ${{ inputs.terraform_version}}
       - name: Configure Azure Login
         uses: azure/login@v1
         with: 

@@ -10,6 +10,7 @@ jobs:
       key: core.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Core
+      terraform_version: 1.4.6
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -28,6 +29,7 @@ jobs:
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Core
       environment: Core Apply
+      terraform_version: 1.4.6
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -46,6 +48,7 @@ jobs:
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Core
       environment: Core Destroy
+      terraform_version: 1.4.6
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -63,6 +66,7 @@ jobs:
       key: networking.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Connectivity_Hub_Spoke
+      terraform_version: 1.4.6
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -80,6 +84,7 @@ jobs:
       key: networking.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Connectivity_Hub_Spoke
+      terraform_version: 1.4.6
       environment: Networking Apply
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
@@ -98,6 +103,7 @@ jobs:
       key: networking.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Connectivity_Hub_Spoke
+      terraform_version: 1.4.6
       environment: Networking Destroy
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
@@ -116,6 +122,7 @@ jobs:
       key: management.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Management
+      terraform_version: 1.4.6
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
@@ -133,6 +140,7 @@ jobs:
       key: management.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Management
+      terraform_version: 1.4.6
       environment: Management Apply
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
@@ -151,6 +159,7 @@ jobs:
       key: management.tfstate
       resource_group_name: rg-terraform-dev-we-01
       working-directory: ./Management
+      terraform_version: 1.4.6
       environment: Management Destroy
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}

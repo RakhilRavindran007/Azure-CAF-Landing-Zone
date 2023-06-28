@@ -6,26 +6,30 @@ on:
         description: Please provide storage account container name here
         required: true
         type: string
-        default: tfstate
+        #default: tfstate
       key:
         description: Please provide tfstate file name
         required: true
         type: string
-        default: core.tfstate
+        #default: core.tfstate
       resource_group_name:
         description: Please provide the storage account resource group name 
         required: true
         type: string
-        default: rg-terraform-dev-we-01
+        #default: rg-terraform-dev-we-01
       working-directory:
         description: Please provide the terraform working directory
         required: true
         type: string
-        default: ./Core
+        #default: ./Core
       environment:
         description: Please Specify the environemnt here
         required: true
         type: string
+      terraform_version:
+        description: Please Provide the terraform version
+        type: string
+        required: true
 
     secrets:
       AZURE_CREDENTIALS:
@@ -58,7 +62,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-            terraform_version: 1.4.6
+            terraform_version: ${{ inputs.terraform_version}}
       - name: Configure Azure Login
         uses: azure/login@v1
         with: 
